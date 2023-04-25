@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    build: ./
+    volumes:
+      - .:/app
+    ports:
+      - 4000:8000
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:8.0.31
+    restart: always
+    environment:
+      MYSQL_DATABASE: ambassador
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+        - .dbdata:/var/lib/mysql
+    ports: 
+        - 33066:3306
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
